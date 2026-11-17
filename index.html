@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ұйымдық мәдениет әлеміне саяхат</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Unbounded:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <canvas id="bg3d"></canvas>
+  <div id="fallback-bg"></div>
+  <div id="vignette"></div>
+
+  <header id="topbar">
+    <div class="brand"><div class="logo" id="brandLogo"></div><span>Ұйымдық мәдениет әлеміне саяхат</span></div>
+    <div id="crumbs"></div>
+    <button class="tb-btn" id="btnRules" title="Ойын ережесі">?</button>
+    <button class="tb-btn" id="btnSound" title="Дыбыс (M)">🔊</button>
+    <button class="tb-btn" id="btnFull" title="Толық экран (F)">⛶</button>
+    <button class="tb-btn" id="btnHost" title="Жүргізуші панелі">⚙</button>
+  </header>
+
+  <main id="screen"></main>
+  <footer id="hud"></footer>
+  <div id="modal"></div>
+  <div id="toast"></div>
+
+  <script src="vendor/three.global.js"></script>
+  <script src="js/ornaments.js"></script>
+  <script src="js/illustrations.js"></script>
+  <script src="js/content.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/scene.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

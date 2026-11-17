@@ -1,0 +1,39 @@
+# Render Blueprint: статический сайт без сборки.
+# Render → New → Blueprint → выбрать репозиторий Galya-play → Apply.
+services:
+  - type: web
+    name: galya-play
+    runtime: static
+    # Сборка не нужна: index.html, css/, js/, vendor/ отдаются как есть
+    buildCommand: echo "static site, no build"
+    staticPublishPath: .
+    pullRequestPreviewsEnabled: false
+    headers:
+      # three.js (1.2 МБ) меняется редко — кэшируем надолго
+      - path: /vendor/*
+        name: Cache-Control
+        value: public, max-age=31536000, immutable
+      # игру и вопросы правим часто — браузер всегда проверяет свежесть
+      - path: /*.html
+        name: Cache-Control
+        value: no-cache
+      - path: /js/*
+        name: Cache-Control
+        value: no-cache
+      - path: /css/*
+        name: Cache-Control
+        value: no-cache
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Referrer-Policy
+        value: strict-origin-when-cross-origin
+    routes:
+      # короткий адрес для ключа ответов: /answers и /otvety
+      - type: rewrite
+        source: /answers
+        destination: /answers.html
+      - type: rewrite
+        source: /otvety
+        destination: /answers.html

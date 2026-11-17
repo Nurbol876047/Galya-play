@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="kk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Жауаптар кілті</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700;800&family=Unbounded:wght@600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #0a1730; --card: #10234a; --card-2: #142b58; --line: rgba(232, 176, 74, 0.35);
+      --gold: #e8b04a; --gold-2: #f7d58b; --cream: #f6ecd8; --muted: #b9c2d8; --ok: #3fbf7f; --bad: #e2574c;
+      --head: 'Unbounded', 'Montserrat', system-ui, sans-serif; --body: 'Montserrat', 'Segoe UI', system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--orn-tile), var(--bg); color: var(--cream); font-family: var(--body); font-size: 16px; line-height: 1.5; }
+    header { position: sticky; top: 0; z-index: 5; background: rgba(8, 18, 40, 0.96); border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); }
+    .bar { max-width: 1100px; margin: 0 auto; padding: 14px 16px 0; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .bar .logo { width: 40px; height: 40px; flex: none; }
+    .bar .logo svg { width: 100%; height: 100%; }
+    .bar h1 { font-family: var(--head); font-size: 1.15em; margin: 0; flex: 1; min-width: 200px; }
+    .bar h1 small { display: block; font-family: var(--body); font-weight: 600; font-size: 0.62em; color: var(--muted); }
+    .btn { font: inherit; font-weight: 700; font-size: 0.9em; padding: 9px 16px; border-radius: 10px; border: 0; cursor: pointer; background: linear-gradient(180deg, #f7d58b, #e8b04a); color: #2a1a05; }
+    .btn.ghost { background: rgba(255, 255, 255, 0.07); color: var(--cream); border: 1px solid rgba(255, 255, 255, 0.2); }
+    .tabs { max-width: 1100px; margin: 0 auto; padding: 12px 16px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .tab { flex: none; display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 30px; border: 1.5px solid rgba(255, 255, 255, 0.15); background: rgba(255, 255, 255, 0.05); color: var(--cream); font: inherit; font-weight: 700; font-size: 0.88em; cursor: pointer; }
+    .tab i { width: 24px; height: 24px; display: inline-block; }
+    .tab i svg { width: 100%; height: 100%; }
+    .tab.on { background: var(--gold); color: #2a1a05; border-color: var(--gold); }
+    main { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+    .stage { display: none; }
+    .stage.on, body.all .stage { display: block; }
+    body.all .stage + .stage { margin-top: 40px; }
+    .stage-head { display: flex; align-items: center; gap: 16px; padding: 18px 20px; border-radius: 18px; background: linear-gradient(90deg, var(--card-2), var(--card)); border: 1.5px solid var(--line); margin-bottom: 16px; position: relative; overflow: hidden; }
+    .stage-head::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 14px; background: var(--orn-band) repeat-x center / auto 14px; opacity: 0.5; }
+    .stage-head .ic { width: 64px; height: 64px; flex: none; }
+    .stage-head .ic svg { width: 100%; height: 100%; }
+    .stage-head .no { font-family: var(--head); font-size: 0.72em; letter-spacing: 0.25em; color: var(--gold-2); }
+    .stage-head h2 { font-family: var(--head); margin: 2px 0; font-size: 1.35em; }
+    .stage-head .el { color: var(--muted); font-size: 0.9em; }
+    .stage-head .pts { margin-left: auto; text-align: right; font-size: 0.82em; color: var(--muted); white-space: nowrap; }
+    .stage-head .pts b { display: block; font-family: var(--head); color: var(--gold-2); font-size: 1.3em; }
+    .quick { padding: 12px 16px; border-radius: 14px; background: rgba(63, 191, 127, 0.1); border: 1px dashed rgba(63, 191, 127, 0.5); margin-bottom: 16px; font-size: 0.92em; }
+    .quick b { color: #9ff5c6; }
+    .quick span { display: inline-block; margin: 2px 14px 2px 0; }
+    .task { padding: 16px 18px; border-radius: 16px; background: var(--card); border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 12px; break-inside: avoid; }
+    .t-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+    .num { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--gold); color: #2a1a05; font-family: var(--head); font-weight: 800; font-size: 0.85em; flex: none; }
+    .num.blitz { background: #2bb3a6; color: #04302b; }
+    .type { font-size: 0.78em; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(43, 179, 166, 0.18); color: #8ff0e3; border: 1px solid rgba(43, 179, 166, 0.45); }
+    .q { font-weight: 700; margin: 0 0 10px; }
+    .story { font-style: italic; color: var(--muted); font-size: 0.9em; margin: 0 0 8px; }
+    .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 10px; }
+    .opts div { padding: 6px 10px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); font-size: 0.9em; }
+    .opts div.ok { background: rgba(63, 191, 127, 0.2); outline: 1.5px solid var(--ok); font-weight: 700; }
+    .opts div b { color: var(--gold-2); margin-right: 6px; }
+    .opts div.ok b { color: #9ff5c6; }
+    .ans { display: flex; gap: 12px; align-items: flex-start; padding: 10px 14px; border-radius: 12px; background: rgba(63, 191, 127, 0.14); border-left: 4px solid var(--ok); margin-bottom: 8px; }
+    .ans .lbl { font-family: var(--head); font-size: 0.72em; letter-spacing: 0.1em; color: #9ff5c6; white-space: nowrap; padding-top: 3px; }
+    .ans .val { font-weight: 700; flex: 1; }
+    .word { font-family: var(--head); font-size: 1.5em; letter-spacing: 0.25em; color: #9ff5c6; }
+    table.pairs { width: 100%; border-collapse: collapse; font-size: 0.92em; font-weight: 600; }
+    table.pairs td { padding: 5px 8px; border-bottom: 1px solid rgba(255, 255, 255, 0.08); vertical-align: top; }
+    table.pairs td:first-child { color: var(--gold-2); width: 34%; }
+    table.pairs td.arr { width: 24px; color: var(--muted); text-align: center; }
+    .baskets { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; }
+    .baskets h4 { margin: 0 0 4px; color: var(--gold-2); font-size: 0.9em; }
+    .baskets ul, ol.seq { margin: 0; padding-left: 1.2em; font-weight: 600; font-size: 0.92em; }
+    .decoys { font-size: 0.85em; color: var(--muted); margin-top: 6px; font-weight: 500; }
+    .imgs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 10px; }
+    .imgs > div { border-radius: 10px; padding: 4px; background: rgba(255, 255, 255, 0.04); position: relative; font-size: 0.75em; }
+    .imgs > div.ok { outline: 2.5px solid var(--ok); background: rgba(63, 191, 127, 0.2); }
+    .imgs svg { width: 100%; height: auto; display: block; border-radius: 8px; }
+    .imgs .lt { position: absolute; top: 8px; left: 8px; width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; background: #13284f; color: var(--gold-2); font-family: var(--head); font-weight: 800; }
+    .imgs > div.ok .lt { background: var(--ok); color: #053; }
+    .mail { background: #f6f3ec; color: #22283a; border-radius: 8px; padding: 6px 8px 6px 36px; font-size: 0.85em; min-height: 72px; }
+    .mail .mail-top { font-weight: 800; } .mail .dot { display: none; } .mail .mail-from { font-size: 0.85em; color: #6a7086; }
+    .why { font-size: 0.88em; color: var(--muted); }
+    .why::before { content: '💡 '; }
+    .sub-h { font-family: var(--head); font-size: 0.95em; color: #8ff0e3; margin: 22px 0 10px; display: flex; align-items: center; gap: 8px; }
+    .note { padding: 12px 16px; border-radius: 12px; background: rgba(232, 176, 74, 0.1); border: 1px solid var(--line); font-size: 0.88em; color: var(--muted); margin-bottom: 18px; }
+    @media (max-width: 720px) { .opts, .baskets { grid-template-columns: 1fr; } .imgs { grid-template-columns: 1fr 1fr; } .stage-head .pts { display: none; } }
+    @media print {
+      :root { --cream: #111; --muted: #444; --gold-2: #7a4a00; }
+      body { background: #fff; font-size: 11.5pt; }
+      header, .note { display: none; }
+      main { padding: 0; max-width: none; }
+      .stage { display: block !important; page-break-before: always; }
+      .stage:first-of-type { page-break-before: auto; }
+      .stage-head, .task { background: #fff !important; border: 1px solid #bbb; }
+      .stage-head::after { display: none; }
+      .ans { background: #eefaf2 !important; } .ans .lbl, .word, .quick b { color: #11663a !important; }
+      .opts div { background: #f5f5f5 !important; } .opts div.ok { background: #dff5e7 !important; outline-color: #2a9a5a; }
+      .opts div.ok b { color: #11663a; } .type { color: #0b5f56; background: #e6f6f4; }
+      .quick { background: #f2fbf5 !important; }
+      .sub-h { color: #0b5f56; }
+      table.pairs td { border-color: #ddd; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="bar">
+      <div class="logo" id="logo"></div>
+      <h1>Жауаптар кілті <small>«Ұйымдық мәдениет әлеміне саяхат» — жүргізушіге арналған</small></h1>
+      <button class="btn ghost" id="bAll">Барлығын көрсету</button>
+      <button class="btn" onclick="window.print()">🖨 Басып шығару</button>
+    </div>
+    <nav class="tabs" id="tabs"></nav>
+  </header>
+  <main id="main"></main>
+
+  <script src="js/ornaments.js"></script>
+  <script src="js/illustrations.js"></script>
+  <script src="js/content.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    const D = window.GAME_DATA, O = window.ORN;
+    const L = ['A', 'B', 'C', 'D', 'E', 'F'];
+    const TYPE = {
+      logic: '🧠 Логикалық сұрақ', situation: '🎭 Жағдаяттық тапсырма', image: '🖼 Сурет арқылы тап', imagechoice: '🖼 Сурет арқылы тап',
+      mail: '✉️ Дұрыс жауапты таңда', match: '🔗 Сәйкестендіру', word: '🔤 Жасырын сөз', sort: '🗂 Топтастыру', rules: '⚖️ Ережені бұзба',
+      order: '🔢 Ретін тап', hotspot: '🔍 Суреттен тап', choice: '✅ Дұрыс жауапты таңда', tf: '⚖️ Ақиқат па, жалған ба?',
+    };
+    const strip = (s) => String(s).replace(/<[^>]+>/g, '');
+
+    // Қысқа жауап (жоғарғы «жылдам кілт» жолағы үшін)
+    function short(t) {
+      if (t.type === 'choice' || t.type === 'imagechoice') return L[t.answer] + (t.type === 'choice' ? ' — ' + strip(t.options[t.answer]) : '');
+      if (t.type === 'word') return t.answer;
+      if (t.type === 'match') return t.left.length + ' жұп (төменде)';
+      if (t.type === 'category') return 'топтар төменде';
+      if (t.type === 'order') return 'реті төменде';
+      if (t.type === 'hotspot') return Object.keys(t.targets).length + ' рәміз';
+      return '';
+    }
+
+    function answerBlock(t) {
+      const ans = (lbl, val) => `<div class="ans"><span class="lbl">${lbl}</span><div class="val">${val}</div></div>`;
+      switch (t.type) {
+        case 'choice':
+          return `<div class="opts">${t.options.map((o, i) => `<div class="${i === t.answer ? 'ok' : ''}"><b>${L[i]}</b>${o}</div>`).join('')}</div>` +
+            ans('ЖАУАБЫ', `${L[t.answer]} — ${t.options[t.answer]}`);
+        case 'imagechoice':
+          return `<div class="imgs">${t.options.map((o, i) => `<div class="${i === t.answer ? 'ok' : ''}"><span class="lt">${L[i]}</span>${o}</div>`).join('')}</div>` +
+            ans('ЖАУАБЫ', `${L[t.answer]}-нұсқа`);
+        case 'match':
+          return ans('ЖҰПТАР', `<table class="pairs">${t.left.map((l, i) => `<tr><td>${l}</td><td class="arr">→</td><td>${t.right[i]}</td></tr>`).join('')}</table>`) +
+            `<div class="decoys">Ойында оң жақ баған араласып шығады — жұптарды мәтін бойынша тексеріңіз.</div>`;
+        case 'category':
+          return ans('ТОПТАР', `<div class="baskets">${t.baskets.map((b, k) => `<div><h4>${b}</h4><ul>${t.items.filter(([, a]) => a === k).map(([x]) => `<li>${x}</li>`).join('')}</ul></div>`).join('')}</div>`);
+        case 'order':
+          return ans('ДҰРЫС РЕТІ', `<ol class="seq">${t.items.map((x) => `<li>${x}</li>`).join('')}</ol>`) +
+            `<div class="decoys">Ойында қадамдар араласып шығады.</div>`;
+        case 'word':
+          return `<p class="q">${t.clue}</p>` + ans('СӨЗ', `<span class="word">${t.answer}</span><div class="decoys">Артық әріптер: ${t.decoys.split('').join(', ')} · Кеңес: ${t.hint}</div>`);
+        case 'hotspot':
+          return ans('5 РӘМІЗ', `<ol class="seq">${Object.values(t.targets).map((x) => `<li>${x}</li>`).join('')}</ol><div class="decoys">Басуға болмайтын заттар (−10): ${Object.values(t.decoys).join(', ')}</div>`);
+      }
+      return '';
+    }
+
+    function taskCard(t, n) {
+      const kind = TYPE[t.kind] || TYPE[t.type];
+      let h = `<div class="task"><div class="t-top"><span class="num">${n}</span><span class="type">${kind}</span></div>`;
+      if (t.story) h += `<p class="story">${t.who ? t.who + ': ' : ''}${t.story}</p>`;
+      if (t.type !== 'word') h += `<p class="q">${t.q}</p>`;
+      h += answerBlock(t);
+      h += `<div class="why">${t.explain}</div></div>`;
+      return h;
+    }
+
+    function blitzCard(b, n) {
+      return `<div class="task"><div class="t-top"><span class="num blitz">⚡${n}</span><span class="type">${b.type === 'tf' ? TYPE.tf : '⚡ Шапшаң сайыс'}</span></div>` +
+        `<p class="q">${b.q}</p><div class="opts">${b.options.map((o, i) => `<div class="${i === b.answer ? 'ok' : ''}"><b>${L[i]}</b>${o}</div>`).join('')}</div>` +
+        `<div class="ans"><span class="lbl">ЖАУАБЫ</span><div class="val">${L[b.answer]} — ${b.options[b.answer]}</div></div><div class="why">${b.explain}</div></div>`;
+    }
+
+    const main = document.getElementById('main');
+    main.innerHTML =
+      `<div class="note">Әр кезең бөлек қойындыда. Жоғарғы жасыл жолақ — жылдам кілт, төменде толық жауап пен түсіндірме. «Басып шығару» батырмасы әр кезеңді жеке бетке басып шығарады. Таңдау сұрақтарындағы A/B/C/D әріптері ойындағыдай (араласпайды).</div>` +
+      D.stages.map((s, si) => {
+        const base = 100 + si * 25, bl = 50 + si * 10;
+        return `<section class="stage" id="stage-${si}">
+          <div class="stage-head"><div class="ic">${O.ICONS[s.icon](s.color)}</div>
+            <div><div class="no">${si + 1}-КЕЗЕҢ</div><h2>«${s.name}»</h2><div class="el">Элемент: ${s.element}</div></div>
+            <div class="pts">Миссия<b>${base}</b>блиц: ${bl}</div></div>
+          <div class="quick"><b>Жылдам кілт:</b><br>${s.tasks.map((t, i) => `<span>${i + 1}) ${short(t)}</span>`).join('')}<br>
+            ${s.blitz.map((b, i) => `<span>⚡${i + 1}) ${L[b.answer]} — ${b.options[b.answer]}</span>`).join('')}</div>
+          ${s.tasks.map((t, i) => taskCard(t, i + 1)).join('')}
+          <div class="sub-h">⚡ Шапшаң сайыс</div>
+          ${s.blitz.map((b, i) => blitzCard(b, i + 1)).join('')}
+        </section>`;
+      }).join('');
+
+    const tabs = document.getElementById('tabs');
+    tabs.innerHTML = D.stages.map((s, i) => `<button class="tab" data-s="${i}"><i>${O.ICONS[s.icon](s.color)}</i>${i + 1}. ${s.name}</button>`).join('');
+    document.getElementById('logo').innerHTML = O.shanyrak('#e8b04a', 8);
+
+    let cur = 0;
+    try { cur = Math.min(4, Math.max(0, +(location.hash.replace('#s', '') || 0))); } catch (e) {}
+    function show(i) {
+      document.body.classList.remove('all');
+      document.getElementById('bAll').textContent = 'Барлығын көрсету';
+      document.querySelectorAll('.stage').forEach((el, k) => el.classList.toggle('on', k === i));
+      document.querySelectorAll('.tab').forEach((el, k) => el.classList.toggle('on', k === i));
+      history.replaceState(null, '', '#s' + i);
+      window.scrollTo(0, 0);
+    }
+    tabs.querySelectorAll('.tab').forEach((b) => (b.onclick = () => show(+b.dataset.s)));
+    document.getElementById('bAll').onclick = function () {
+      const all = document.body.classList.toggle('all');
+      this.textContent = all ? 'Бір кезеңді көрсету' : 'Барлығын көрсету';
+      document.querySelectorAll('.tab').forEach((el) => el.classList.toggle('on', all));
+    };
+    show(cur);
+    window.addEventListener('load', () => window.scrollTo(0, 0));
+  })();
+  </script>
+</body>
+</html>
